@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Todo List</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	{% load static %}
+	<link rel="stylesheet" href="{% static 'css/home_style.css' %}">
+</head>
+<body>
+
+<title>Anasayfa</title>
+
+<div class="center-column">
+	<h4>{{request.user.get_full_name}}</h4>
+
+	{% if messages %}
+		{% for message in messages %}
+			{% if message.tags == 'error' %}
+				<h5 style="color: firebrick;">{{message}}</h5>
+			{% else %}
+				<h5 style="color: slateblue;">{{message}}</h5>
+			{% endif %}
+		{% endfor %}
+	{% endif %}
+	<form method="POST">
+		{% csrf_token %}
+		<input type="text" placeholder="Görev Ekle" name="task" required>
+		<input class="btn btn-info" value='Add Task' type="submit">
+	</form>
+
+	<a href="{% url 'logout' %}"><input class="btn btn-info" type="button" value="Logout"></a>
+	<p>Bitmiş görevler: {{finished_tasks}}  | Bitmemiş Görevler: {{unfinished_tasks}}</p>
+	
+	<div class="todo-list">
+		{% for task in tasks %}
+			<div class="item-row">
+				<a class="btn btn-sm btn-info" href="{% url 'update_task_status' task.id %}">Update</a>
+				<a class="btn btn-sm btn-danger" href="{% url 'delete_task' task.id %}">Delete</a>
+				{% if task.is_completed %}
+					<strike>{{task.content}}</strike>
+				{% else %}
+					{{task.content}}
+				{% endif %}
+			</div>
+		{% endfor %}
+	</div>
+</div>
+</body>
+</html>

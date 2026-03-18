@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Todo List | Kaydol</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  </head>
+  <body>
+    <div class="center">
+      <h1>Kaydol</h1>
+          
+      {% if messages %}
+        {% for message in messages %}
+          {% if message.tags == 'error' %}
+            <center><h4 style="color: firebrick;">{{message}}</h4></center>
+          {% else %}
+            <center><h4 style="color: dodgerblue;">{{message}}</h4></center>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+      <form method="POST">
+        {% csrf_token %}
+        <div class="txt_field">
+            <input type="text" name="first_name" required>
+            <span></span>
+            <label>Adı</label>
+          </div>
+
+          <div class="txt_field">
+            <input type="text" name="last_name" required>
+            <span></span>
+            <label>Soyadı</label>
+          </div>
+
+        <div class="txt_field">
+          <input type="text" name="username" required>
+          <span></span>
+          <label>Kullanıcı Adı</label>
+        </div>
+
+        <div class="txt_field">
+            <input type="email" name="email" required>
+            <span></span>
+            <label>Email</label>
+          </div>
+
+        <div class="txt_field">
+          <input type="password" name="password" required>
+          <span></span>
+          <label>Şifre</label>
+        </div>
+
+        <div class="txt_field">
+          <input type="password" name="confirm_password" required>
+          <span></span>
+          <label>Şifreyi doğrula</label>
+        </div>
+        <input type="submit" value="Register">
+        <div class="signup_link">
+          Hesabınız var mı? <a href="{% url 'login' %}">Giriş yapın</a>
+        </div>
+      </form>
+    </div>
+
+  </body>
+</html>

@@ -1,5 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
-def home(request):
-    return HttpResponse('Hello,world!')
+def register(request):
+    pass 
+
+def login_user(request):
+    pass
