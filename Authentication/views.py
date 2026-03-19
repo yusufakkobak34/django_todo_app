@@ -1,8 +1,9 @@
-from email import message
 from django.shortcuts import render,redirect
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate,login
+from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 
 def register(request):
     if request.method == 'POST':
@@ -65,6 +66,7 @@ def login_user(request):
             login(request,user)
 
             # Redirect the user to home page
+            return redirect('home')
 
         else: 
             messages.error(request,'Geçersiz kullanıcı adı veya şifre')
@@ -72,3 +74,7 @@ def login_user(request):
         
 
     return render(request,'Authentication/login.html')
+@login_required
+
+def home(request):
+    return HttpResponse('Başarıyla yetkilendirildi')
